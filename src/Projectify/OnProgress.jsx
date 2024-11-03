@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import OnProgressTask from "../Components/onProgressTask";
+import OnProgressTask from "../Components/OnProgressTask";
 import { LevelContext } from "./../Contexts/TaskContext";
 import { getFilterData } from "./../utils/getFilterData";
 
