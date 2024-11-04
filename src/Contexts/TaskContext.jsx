@@ -6,13 +6,11 @@ export const LevelContext = createContext(null);
 export default function TaskContext({ children }) {
   const [showModal, setShowModal] = useState(false);
   const [editTask, setEditTask] = useState(null);
-  // const [tasks, setTasks] = useState(Tasks);
   const [searchText, setSearchText] = useState("");
   const [tasks, dispatch] = useReducer(TaskReducer, Tasks);
 
   const myValue = {
     tasks,
-    // setTasks,
     showModal,
     setShowModal,
     editTask,

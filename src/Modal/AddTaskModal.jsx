@@ -1,4 +1,5 @@
 import { useContext, useState } from "react";
+import { toast } from "react-toastify";
 import { LevelContext } from "../Contexts/TaskContext";
 
 const demoObj = {
@@ -26,11 +27,15 @@ export default function AddTaskModal({ editTask }) {
   // add task function
   const handleAddTask = (event) => {
     event.preventDefault();
-    dispatch({
-      type: "add",
-      setShowModal,
-      task
-    });
+    if (task.taskName && task.description && task.category && task.dueDate) {
+      dispatch({
+        type: "add",
+        setShowModal,
+        task
+      });
+    } else {
+      toast.warn("Input field should not be empty", { theme: "colored" });
+    }
   };
 
   const handleCancel = () => {
