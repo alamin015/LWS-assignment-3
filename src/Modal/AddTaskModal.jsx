@@ -1,5 +1,4 @@
 import { useContext, useState } from "react";
-import { toast } from "react-toastify";
 import { LevelContext } from "../Contexts/TaskContext";
 
 const demoObj = {
@@ -11,7 +10,8 @@ const demoObj = {
 
 /* eslint-disable react/prop-types */
 export default function AddTaskModal({ editTask }) {
-  const { tasks, setTasks, setShowModal } = useContext(LevelContext);
+  const { dispatch, setEditTask, setShowModal } = useContext(LevelContext);
+
   const [task, setTask] = useState(
     editTask || { ...demoObj, id: crypto.randomUUID() }
   );
@@ -23,37 +23,30 @@ export default function AddTaskModal({ editTask }) {
       [name]: value
     });
   };
-
   // add task function
   const handleAddTask = (event) => {
     event.preventDefault();
-    if (task.taskName && task.description && task.category && task.dueDate) {
-      setTasks([...tasks, task]);
-      setShowModal(false);
-      setTask({ ...demoObj, id: crypto.randomUUID() });
-    } else {
-      toast.warn("Input field should not be empty", { theme: "colored" });
-    }
+    dispatch({
+      type: "add",
+      setShowModal,
+      task
+    });
   };
 
   const handleCancel = () => {
     setShowModal(false);
     setTask({ ...demoObj, id: crypto.randomUUID() });
+    setEditTask(null);
   };
 
   const handleEditTask = (e, myTask) => {
     e.preventDefault();
-    setTasks(
-      tasks.map((i) => {
-        if (i.id === myTask.id) {
-          return myTask;
-        } else {
-          return i;
-        }
-      })
-    );
-    setShowModal(false);
-    setTask({ ...demoObj, id: crypto.randomUUID() });
+    dispatch({
+      type: "edit",
+      setShowModal,
+      myTask,
+      setEditTask
+    });
   };
 
   return (

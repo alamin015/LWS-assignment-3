@@ -36,7 +36,7 @@ export default function DonTask({ item, onHandleDelete }) {
           </svg>
           <svg
             onClick={() => handleEdit(item)}
-            className='h-4 w-4 cursor-pointer text-zinc-300'
+            className='h-4 w-4 cursor-pointer text-zinc-300 '
             fill='none'
             stroke='currentColor'
             viewBox='0 0 24 24'

@@ -3,7 +3,7 @@ import ReviseTask from "../Components/ReviseTask";
 import { LevelContext } from "./../Contexts/TaskContext";
 import { getFilterData } from "./../utils/getFilterData";
 export default function Revise() {
-  const { tasks, setTasks, searchText } = useContext(LevelContext);
+  const { tasks, dispatch, searchText } = useContext(LevelContext);
   const [isAscending, setIsAscending] = useState(true);
   const revisedTasks = tasks.filter(
     (task) =>
@@ -19,9 +19,11 @@ export default function Revise() {
 
   // handle delete
 
-  const handleDelete = (taskId) => {
-    const updatedTasks = tasks.filter((i) => i.id !== taskId);
-    setTasks(updatedTasks);
+  const handleDelete = (id) => {
+    dispatch({
+      type: "delete",
+      id
+    });
   };
   return (
     <div className='mb-4 w-full px-2 sm:w-1/2 md:w-1/4'>
@@ -41,7 +43,7 @@ export default function Revise() {
             strokeWidth='2'
             strokeLinecap='round'
             strokeLinejoin='round'
-            className='icon icon-tabler icons-tabler-outline icon-tabler-sort-descending'
+            className='icon icon-tabler icons-tabler-outline icon-tabler-sort-descending cursor-pointer'
           >
             <path stroke='none' d='M0 0h24v24H0z' fill='none' />
             <path d='M4 6l9 0' />

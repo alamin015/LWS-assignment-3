@@ -4,7 +4,7 @@ import { LevelContext } from "./../Contexts/TaskContext";
 import { getFilterData } from "./../utils/getFilterData";
 
 export default function OnProgress() {
-  const { tasks, setTasks, searchText } = useContext(LevelContext);
+  const { tasks, dispatch, searchText } = useContext(LevelContext);
   const [isAscending, setIsAscending] = useState(true);
   const onProgressTasks = tasks.filter(
     (task) =>
@@ -19,9 +19,11 @@ export default function OnProgress() {
         : new Date(b.dueDate) - new Date(a.dueDate)
   );
   // handle delete
-  const handleDelete = (taskId) => {
-    const updatedTasks = tasks.filter((i) => i.id !== taskId);
-    setTasks(updatedTasks);
+  const handleDelete = (id) => {
+    dispatch({
+      type: "delete",
+      id
+    });
   };
 
   return (
@@ -42,7 +44,7 @@ export default function OnProgress() {
             strokeWidth='2'
             strokeLinecap='round'
             strokeLinejoin='round'
-            className='icon icon-tabler icons-tabler-outline icon-tabler-sort-descending'
+            className='icon icon-tabler icons-tabler-outline icon-tabler-sort-descending cursor-pointer'
           >
             <path stroke='none' d='M0 0h24v24H0z' fill='none' />
             <path d='M4 6l9 0' />

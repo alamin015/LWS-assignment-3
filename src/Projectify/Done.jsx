@@ -3,7 +3,7 @@ import DonTask from "../Components/DoneTask";
 import { LevelContext } from "./../Contexts/TaskContext";
 import { getFilterData } from "./../utils/getFilterData";
 export default function Done() {
-  const { tasks, setTasks, searchText } = useContext(LevelContext);
+  const { tasks, dispatch, searchText } = useContext(LevelContext);
   const [isAscending, setIsAscending] = useState(true);
   const DoneTasks = tasks.filter(
     (task) =>
@@ -16,9 +16,8 @@ export default function Done() {
       ? new Date(a.dueDate) - new Date(b.dueDate)
       : new Date(b.dueDate) - new Date(a.dueDate)
   );
-  const handleDelete = (taskId) => {
-    const updatedTasks = tasks.filter((i) => i.id !== taskId);
-    setTasks(updatedTasks);
+  const handleDelete = (id) => {
+    dispatch({ type: "delete", id });
   };
 
   return (
